@@ -1,0 +1,41 @@
+a {
+    color: white;
+}
+
+a:hover {
+    text-decoration: none;
+    color: grey;
+}
+
+
+.header-logo {
+    max-height: 100px;
+    height: 10%;
+    display: inline-block;
+    margin-right: 25px;
+}
+
+.carousel-image {
+    width: 100%;
+}
+
+.darken {
+    background-color: rgba(0,0,0,0.75);
+}
+
+.footer-fixed-bottom {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    margin: 0 50px 15px 50px;
+}
+
+.header-fixed-top {
+    position: fixed;
+    top: 0px;
+    margin-top: 75px;
+}
+
+.padded-top {
+    padding-top: 75px;
+}

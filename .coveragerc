@@ -1,0 +1,3 @@
+[run]
+source = wics_2
+omit = wics_2/test*
