@@ -1,7 +1,10 @@
 from pyramid.view import view_config
+from pyramid.response import Response
 import subprocess as command
 import logging
 import datetime
+import sys
+import os
 log = logging.getLogger(__name__)
 
 
@@ -15,26 +18,25 @@ def hackathon_home(request):
     return {'project': 'hackathon'}
 
 
-def self_is_outdated(commit):
-    process = command.Popen(['git rev-parse HEAD'], stdout=command.PIPE, shell=True)
-    (output, err) = process.communicate()
-    if process.wait() == 0:
-        return commit[:len(commit) - 1].decode('utf-8') == output
-    return False
-
-
 def redeploy():
-    process = command.Popen(['git pull origin master'])
-    process.communicate()
-    if process.wait() == 0:
-        log.debug('Deploying from Github master at ' + datetime.datetime.now().__str__())
+    base_dir = os.path.dirname(os.path.realpath(__file__))
+    process = command.call([base_dir + '/deploy_script.sh'], shell=True)
+    if process == 0:
+        return True
     else:
-        log.error('Error deploying from master')
+        return False
 
 
 @view_config(route_name='githubdeploy', request_method='POST')
 def deploy_prod(request):
-    body = request.json_body
-    if 'head_commit' in body and 'id' in body['head_commit']:
-        if self_is_outdated(body['head_commit']['id']):
-            redeploy()
+    try:
+        body = request.json_body
+        if 'head_commit' in body and 'id' in body['head_commit']:
+            if redeploy():
+                log.debug('Deployment succeeded at ' + datetime.datetime.now().__str__())
+                return Response(content_type = 'text/plain', body = 'success')
+        log.error('Deployment failed at ' + datetime.datetime.now().__str__())
+    except:
+        log.error('There was an error handling the request at ' + datetime.datetime.now().__str__())
+        log.error(sys.exc_info()[0])
+    return Response(content_type = 'text/plain', body = 'failed')
