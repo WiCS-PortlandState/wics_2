@@ -31,7 +31,9 @@ def redeploy():
 def deploy_prod(request):
     try:
         body = request.json_body
-        if 'head_commit' in body and 'id' in body['head_commit']:
+        if 'head_commit' in body and 'ref' in body and 'id' in body['head_commit']:
+            if not body['ref'].endswith('master'):
+                return Response(content_type = 'text/plain', body = 'no action')
             if redeploy():
                 log.debug('Deployment succeeded at ' + datetime.datetime.now().__str__())
                 return Response(content_type = 'text/plain', body = 'success')
