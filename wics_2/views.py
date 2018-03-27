@@ -18,6 +18,21 @@ def hackathon_home(request):
     return {'project': 'hackathon'}
 
 
+@view_config(route_name='hackathon-schedule', renderer='templates/hackathon-schedule.jinja2')
+def hackathon_schedule(request):
+    return {'project': 'hackathon'}
+
+
+@view_config(route_name='hackathon-register', renderer='templates/hackathon-register.jinja2')
+def hackathon_register(request):
+    return {'project': 'hackathon'}
+
+
+@view_config(route_name='hackathon-contact', renderer='templates/hackathon-contact.jinja2')
+def hackathon_contact(request):
+    return {'project': 'hackathon'}
+
+
 def redeploy():
     base_dir = os.path.dirname(os.path.realpath(__file__))
     process = command.call([base_dir + '/deploy_script.sh'], shell=True)
@@ -41,4 +56,4 @@ def deploy_prod(request):
     except:
         log.error('There was an error handling the request at ' + datetime.datetime.now().__str__())
         log.error(sys.exc_info()[0])
-    return Response(content_type = 'text/plain', body = 'failed')
+    return Response(content_type='text/plain', body='failed')
