@@ -7,6 +7,10 @@ a:hover {
     color: grey;
 }
 
+.big-bottom-margin {
+    margin-bottom: 150px;
+}
+
 .black-background {
     background-color: rgba(0, 0, 0, 0.33);
 }
