@@ -1,8 +1,15 @@
-{% extends "hackathon-layout.jinja2" %}
+{% extends "hackathon-top-aligned-layout.jinja2" %}
 
 {% block content%}
-<div class="content">
-    <h1 class="font-bold">Event Registration</h1>
-    <p class="lead">Registration for this event is not currently open yet. Check back on April 2, 2018 to register your team!</p>
-</div>
+    <div class="content">
+        <h1 class="font-bold big-bottom-margin text-center">Event Registration</h1>
+        <h2 class="font-bold">BEFORE YOU REGISTER</h2>
+        <p class="lead">Please complete the following steps:</p>
+        <ul>
+            <li>Read the <a class="font-bold" href="http://wics.cs.pdx.edu/hackathon#code_of_conduct">code of conduct</a></li>
+            <li>Read the <a class="font-bold" href="http://wics.cs.pdx.edu/hackathon">do's and don't do's</a> on the hackathon main page</li>
+        </ul>
+        <p class="big-bottom-margin">Note that to be included in the running for the main prize, you'll need $5.00 cash when you come in on April 20th. This is optional but all of these covers will go into a pot that goes to the winning team, so pitch in!</p>
+        <p class="text-center"><a class="btn btn-lg btn-primary" href="https://www.eventbrite.com/e/the-sustainability-hackathon-tickets-44737687628" role="button" target="_blank">Register</a></p>
+    </div>
 {% endblock content %}
