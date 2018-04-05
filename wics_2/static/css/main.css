@@ -7,6 +7,14 @@ a:hover {
     color: grey;
 }
 
+.small-bottom-margin {
+    margin-bottom: 25px;
+}
+
+.medium-bottom-margin {
+    margin-bottom: 75px;
+}
+
 .big-bottom-margin {
     margin-bottom: 150px;
 }
