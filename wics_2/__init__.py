@@ -13,5 +13,6 @@ def main(global_config, **settings):
     config.add_route('hackathon-register', '/hackathon/register')
     config.add_route('hackathon-contact', '/hackathon/contact')
     config.add_route('githubdeploy', '/githubdeploy')
+    config.add_route('hackathon-sponsors', '/hackathon/sponsors')
     config.scan()
     return config.make_wsgi_app()

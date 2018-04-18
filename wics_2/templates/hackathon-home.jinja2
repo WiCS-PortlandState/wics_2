@@ -2,8 +2,16 @@
 
 {% block content%}
     <div class="content big-bottom-margin text-center">
-    <img class="medium-bottom-margin col-12" src="{{ request.static_url('wics_2:static/images/hackathon/hackathon-registration-1.jpg') }}">
-    <p class="lead">
+    <img class="small-bottom-margin col-12" src="{{ request.static_url('wics_2:static/images/hackathon/hackathon-registration-1.jpg') }}">
+        <div class="col-12">
+            <a href="https://www.cdkglobal.com" target="_blank">
+                <img class="small-bottom-margin icon" src="{{ request.static_url('wics_2:static/images/hackathon/cdk_logo.png') }}">
+            </a>
+            <a href="https://deepai.org" target="_blank">
+                <img class="small-bottom-margin icon" src="{{ request.static_url('wics_2:static/images/hackathon/deepAI_brackets.png') }}">
+            </a>
+        </div>
+        <p class="lead">
         The WiCS Hackathon is a great opportunity for unexperienced and experienced programmers alike! Come
         enjoy free food, networking opportunities and a day of hacking together little projects with friends.
         When you get to the <a class="font-bold" href="https://goo.gl/maps/4aQRfWuBbsR2" target="_blank">engineering building</a> on the 20th,
@@ -17,6 +25,13 @@
         Don't have much coding experience? No problem! We'll have industry experts going between groups to help you work through
         your ideas and bring them to life! We want you to not only have a great time at the event, but also come away
         with valuable experience that will make you a better team player and programmer! We hope to see you there! :)
+        <br><br>
+        We also have some great sponsors for this event,
+        <a class="font-bold" href="https://www.cdkglobal.com" target="_blank">CDK Global</a>
+        and
+        <a class="font-bold" href="https://deepai.org" target="_blank">DeepAI</a>
+        who have both been very generous. Make sure to show them some love for us when you see them on campus and around town!
+        Read more about these companies <a href="/hackathon/sponsors" class="font-bold">here</a>.
     </p>
     </div>
     <div class="big-bottom-margin jumbotron bg-dark">
