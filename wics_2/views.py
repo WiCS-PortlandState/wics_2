@@ -33,6 +33,11 @@ def hackathon_contact(request):
     return {'project': 'hackathon'}
 
 
+@view_config(route_name='hackathon-sponsors', renderer='templates/hackathon-sponsors.jinja2')
+def hackathon_sponsors(request):
+    return {'project': 'hackathon'}
+
+
 def redeploy():
     base_dir = os.path.dirname(os.path.realpath(__file__))
     process = command.call([base_dir + '/deploy_script.sh'], shell=True)

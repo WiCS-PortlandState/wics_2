@@ -7,6 +7,14 @@ a:hover {
     color: grey;
 }
 
+.small-bottom-margin {
+    margin-bottom: 25px;
+}
+
+.medium-bottom-margin {
+    margin-bottom: 75px;
+}
+
 .big-bottom-margin {
     margin-bottom: 150px;
 }
@@ -45,6 +53,17 @@ a:hover {
     position: fixed;
     top: 0px;
     margin-top: 75px;
+}
+
+.icon {
+    width: 100px;
+    max-height: 100px;
+}
+
+.icon-match {
+    line-height: 100px;
+    vertical-align: center;
+    margin: 0px 20px 0px 20px;
 }
 
 .padded-top {

@@ -1,0 +1,25 @@
+{% extends "hackathon-top-aligned-layout.jinja2" %}
+
+{% block content %}
+    <div class="content">
+        <h1 class="display-4 font-weight-normal text-center page-header row">Sponsors</h1>
+        <div class="row">
+        <div class="col-6 text-center">
+            <a href="https://cdkglobal.com" target="_blank">
+                <img class="icon small-bottom-margin" src="{{ request.static_url('wics_2:static/images/hackathon/cdk_logo.png') }}">
+            </a>
+            <p class="big-bottom-margin">
+                CDK Global is the largest global provider of integrated information technology and digital marketing solutions
+                to the automotive retail industry. We provide auto dealer software for truck, motorcycle, marine and RV from
+                advertising to the sale, finance & insurance and service & parts of a vehicle with more than 26,000 dealer
+                sites in over 100 countries and nearly 9,000 employees worldwide.
+            </p>
+        </div>
+        <div class="col-6 text-center">
+            <a href="https://deepai.org" target="_blank">
+                <img class="icon" src="{{ request.static_url('wics_2:static/images/hackathon/deepAI_brackets.png') }}">
+            </a>
+        </div>
+        </div>
+    </div>
+{% endblock content %}

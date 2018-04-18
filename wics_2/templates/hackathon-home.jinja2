@@ -1,8 +1,38 @@
 {% extends "hackathon-top-aligned-layout.jinja2" %}
 
 {% block content%}
-    <div class="content big-bottom-margin">
-    <img class="big-bottom-margin col-12" src="{{ request.static_url('wics_2:static/images/hackathon/hackathon-registration-1.jpg') }}">
+    <div class="content big-bottom-margin text-center">
+    <img class="small-bottom-margin col-12" src="{{ request.static_url('wics_2:static/images/hackathon/hackathon-registration-1.jpg') }}">
+        <div class="col-12">
+            <a href="https://www.cdkglobal.com" target="_blank">
+                <img class="small-bottom-margin icon" src="{{ request.static_url('wics_2:static/images/hackathon/cdk_logo.png') }}">
+            </a>
+            <a href="https://deepai.org" target="_blank">
+                <img class="small-bottom-margin icon" src="{{ request.static_url('wics_2:static/images/hackathon/deepAI_brackets.png') }}">
+            </a>
+        </div>
+        <p class="lead">
+        The WiCS Hackathon is a great opportunity for unexperienced and experienced programmers alike! Come
+        enjoy free food, networking opportunities and a day of hacking together little projects with friends.
+        When you get to the <a class="font-bold" href="https://goo.gl/maps/4aQRfWuBbsR2" target="_blank">engineering building</a> on the 20th,
+        you'll be treated to some snacks, an opportunity to join a group (if you haven't already joined up with one)
+        and some keynote speeches from industry professionals on diversity and the theme of our hackathon: sustainability.
+        Then, on the following day, you'll meet up with your team and build small projects under the theme. At the end of
+        the night, groups will get the opportunity to present their ideas to the group! This is a fun, low-pressure way
+        to get better at programming, smooze with industry professionals and hang out with a bunch of other people who
+        like to program, just like you!
+        <br><br>
+        Don't have much coding experience? No problem! We'll have industry experts going between groups to help you work through
+        your ideas and bring them to life! We want you to not only have a great time at the event, but also come away
+        with valuable experience that will make you a better team player and programmer! We hope to see you there! :)
+        <br><br>
+        We also have some great sponsors for this event,
+        <a class="font-bold" href="https://www.cdkglobal.com" target="_blank">CDK Global</a>
+        and
+        <a class="font-bold" href="https://deepai.org" target="_blank">DeepAI</a>
+        who have both been very generous. Make sure to show them some love for us when you see them on campus and around town!
+        Read more about these companies <a href="/hackathon/sponsors" class="font-bold">here</a>.
+    </p>
     </div>
     <div class="big-bottom-margin jumbotron bg-dark">
         <h2 class="text-center font-bold">FAQ</h2>
@@ -17,7 +47,7 @@
         <h3>Who can participate?</h3>
         <p>Any student of any gender at Portland State University is welcome to participate.</p>
         <h3>How do I register?</h3>
-        <p>Registration is on an individual basis. You can register <a href="http://wics.cs.pdx.edu/hackathon/register">here.</a></p>
+        <p>Registration is on an individual basis. You can register <a class="font-bold" href="http://wics.cs.pdx.edu/hackathon/register">here.</a></p>
         <h3>Is there an entry fee?</h3>
         <p>No, it’s a free event. However, there is a $5.00 cover at the door for anybody who wants to be considered for a prize. The cover goes into a pot awarded to the team that places first, overall.</p>
         <h3>Is the food provided?</h3>
