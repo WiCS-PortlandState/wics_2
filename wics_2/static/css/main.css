@@ -40,10 +40,8 @@ a:hover {
 }
 
 .header-logo {
-    max-height: 100px;
-    height: 10%;
-    display: inline-block;
-    margin-right: 25px;
+    max-width: 400px;
+    width: 100%;
 }
 
 .carousel-image {
@@ -58,7 +56,7 @@ a:hover {
     position: fixed;
     bottom: 0px;
     width: 100%;
-    margin: 0 50px 15px 50px;
+    padding: 15px;
 }
 
 .header-fixed-top {

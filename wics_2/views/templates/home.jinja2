@@ -1,11 +1,20 @@
 {% extends "layout.jinja2" %}
 
 {% block content%}
-    <div class="content">
-        <img class="header-logo float-left" src="{{ request.static_url('wics_2:static/images/rosie_profile.png') }}">
-        <h1><span class="font-bold">WiCS</span></h1>
-        <h2><span class="smaller">women in computer science, PSU</span></h2>
-        <p class="lead">Promoting diversity and inclusion in the Computer Science program of Portland State University</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <img class="header-logo" src="{{ request.static_url('wics_2:static/images/rosie_profile.png') }}">
+            </div>
+            <div class="col-sm">
+                <h1><span class="font-bold">WiCS</span></h1>
+                <h2><span class="smaller">women in computer science, PSU</span></h2>
+                 <p class="lead">Promoting diversity and inclusion in the Computer Science program of Portland State University</p>
+            </div>
+        </div>
+        <div class="row">
+        </div>
+
         <main role="main row">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">

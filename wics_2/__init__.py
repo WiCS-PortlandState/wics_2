@@ -8,6 +8,7 @@ def main(global_config, **settings):
     config.include('pyramid_jinja2')
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home', '/')
+    config.add_route('designer-home', '/design')
     config.add_route('hackathon-home', '/hackathon')
     config.add_route('hackathon-schedule', '/hackathon/schedule')
     config.add_route('hackathon-register', '/hackathon/register')
