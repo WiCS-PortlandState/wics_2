@@ -13,7 +13,15 @@ requires = [
     'pyramid_jinja2',
     'pyramid_debugtoolbar',
     'waitress',
-    ]
+    'sqlalchemy',
+    'psycopg2',
+    'alembic',
+    'bcrypt',
+    'zope.sqlalchemy',
+    'pyramid-beaker',
+    'pyramid_tm',
+    'pyramid_retry',
+]
 
 tests_require = [
     'WebTest >= 1.3.1',  # py3 compat

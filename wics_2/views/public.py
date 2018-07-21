@@ -1,41 +1,14 @@
 from pyramid.view import view_config
 from pyramid.response import Response
 import subprocess as command
-import logging
 import datetime
 import sys
 import os
-log = logging.getLogger(__name__)
 
 
 @view_config(route_name='home', renderer='templates/home.jinja2')
 def home(request):
     return {'project': 'wics_2'}
-
-
-@view_config(route_name='hackathon-home', renderer='templates/hackathon-home.jinja2')
-def hackathon_home(request):
-    return {'project': 'hackathon'}
-
-
-@view_config(route_name='hackathon-schedule', renderer='templates/hackathon-schedule.jinja2')
-def hackathon_schedule(request):
-    return {'project': 'hackathon'}
-
-
-@view_config(route_name='hackathon-register', renderer='templates/hackathon-register.jinja2')
-def hackathon_register(request):
-    return {'project': 'hackathon'}
-
-
-@view_config(route_name='hackathon-contact', renderer='templates/hackathon-contact.jinja2')
-def hackathon_contact(request):
-    return {'project': 'hackathon'}
-
-
-@view_config(route_name='hackathon-sponsors', renderer='templates/hackathon-sponsors.jinja2')
-def hackathon_sponsors(request):
-    return {'project': 'hackathon'}
 
 
 def redeploy():

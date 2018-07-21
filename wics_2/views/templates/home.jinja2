@@ -1,11 +1,25 @@
-{% extends "layout.jinja2" %}
-
+{% extends "wics-setup.jinja2" %}
+{% block main_nav %}
+    {% include "public-menu.jinja2" %}
+{% endblock main_nav %}
 {% block content%}
-    <div class="content">
-        <img class="header-logo float-left" src="{{ request.static_url('wics_2:static/images/rosie_profile.png') }}">
-        <h1><span class="font-bold">WiCS</span></h1>
-        <h2><span class="smaller">women in computer science, PSU</span></h2>
-        <p class="lead">Promoting diversity and inclusion in the Computer Science program of Portland State University</p>
+    <div class="container">
+        {% include "user_portal/auth/login-modal.jinja2" %}
+        <div class="row">
+            <div class="col-sm">
+                <img class="header-logo d-inline align-top" src="{{ request.static_url('wics_2:static/images/rosie_profile.png') }}">
+                <h1 class="font-bold typography-cursive font-xxxl d-inline align-bottom">WiCS</h1>
+            </div>
+            </div>
+        <div class="row">
+            <div class="col-sm">
+                <h2><span class="smaller typography-cursive">women in computer science, PSU</span></h2>
+                 <p class="lead">Promoting diversity and inclusion in the Computer Science program of Portland State University</p>
+            </div>
+        </div>
+        <div class="row">
+        </div>
+
         <main role="main row">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
