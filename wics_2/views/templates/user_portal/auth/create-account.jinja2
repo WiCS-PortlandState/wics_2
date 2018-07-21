@@ -1,0 +1,84 @@
+{% extends "../../wics-setup.jinja2" %}
+{% block main_nav %}
+    {% include "../../public-menu.jinja2" %}
+{% endblock main_nav %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="typography-body text-warning mb-2" id="create-error-field"></div>
+            <label for="username-create-field">username</label>
+            <input type="text" class="form-text mb-2" id="username-create-field" />
+            <label for="first-name-create-field">first name</label>
+            <input type="text" class="form-text mb-2" id="first-name-login-field" />
+            <label for="last-name-create-field">last name</label>
+            <input type="text" class="form-text mb-2" id="last-name-login-field" />
+            <label for="nickname-create-field">nickname</label>
+            <input type="text" class="form-text mb-2" id="nickname-create-field" />
+            <label for="email-create-field">email</label>
+            <input type="text" class="form-text mb-2" id="email-create-field" />
+            <label for="password-create-field">password</label>
+            <input type="text" class="form-text mb-2" id="password-create-field" />
+            <label for="password-validate-create-field">type your password again</label>
+            <input type="text" class="form-text mb-2" id="password-validate-create-field" />
+        </div>
+    </div>
+    <script>
+        $('#user-create-button').click(function() {
+            var password = $('#password-create-field').val();
+            var passwordValidate = $('#password-validate-create-field').val();
+            if (password !== passwordValidate) {
+                $('#create-error-field').text('Passwords do not match');
+                return;
+            }
+            var username = $('#username-create-field').val();
+            var firstName = $('#first-name-create-field').val();
+            var lastName = $('#last-name-create-field').val();
+            var nickname = $('#nickname-create-field').val();
+            var email = $('#email-create-field').val();
+            $.ajax({
+                type: 'POST',
+                url: '/user/create-user',
+                data: {
+                    username: username,
+                    password: password,
+                    firstName: firstName,
+                    lastName: lastName,
+                    nickname: nickname,
+                    email: email,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.error) {
+                        $('#create-error-field').text(data.error.message);
+                    }
+                },
+            });
+        });
+
+        $('#username-create-field').onfocusout(function() {
+            var username = $('#username-create-field').val();
+            if (username === '') {
+                $('#username-create-field').removeClass('border-warning');
+                $('#create-error-field').text('');
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/user/validate-username',
+                data: {
+                    username: username,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.isTaken) {
+                        $('#username-create-field').addClass('border-warning');
+                        $('#create-error-field').text('That username is taken');
+                    } else {
+                        $('#username-create-field').removeClass('border-warning');
+                        $('#create-error-field').text('');
+                    }
+                }
+            })
+        });
+    </script>
+{% endblock content %}

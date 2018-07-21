@@ -2,6 +2,15 @@
 {% block main_nav %}
     {% include "public-menu.jinja2" %}
 {% endblock main_nav %}
+{% block errors %}
+    {% if error != None %}
+        <div class="toaster bg-danger" id="general-error-toast">{{ error }}</div>
+        <script>
+            $('#general-error-toast').addClass('toaster-show');
+            setTimeout(function() { $('#general-error-toast').removeClass('toaster-show') }, 3000);
+        </script>
+    {% endif %}
+{% endblock errors %}
 {% block content%}
     <div class="container">
         {% include "user_portal/auth/login-modal.jinja2" %}

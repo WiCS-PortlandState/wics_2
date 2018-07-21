@@ -21,16 +21,17 @@ def main(global_config, **settings):
 
     config.add_route('designer-home', '/design')
 
-    config.add_route('hackathon-home', '/hackathon')
-    config.add_route('hackathon-schedule', '/hackathon/schedule')
-    config.add_route('hackathon-register', '/hackathon/register')
-    config.add_route('hackathon-contact', '/hackathon/contact')
-    config.add_route('hackathon-sponsors', '/hackathon/sponsors')
+    # config.add_route('hackathon-home', '/hackathon')
+    # config.add_route('hackathon-schedule', '/hackathon/schedule')
+    # config.add_route('hackathon-register', '/hackathon/register')
+    # config.add_route('hackathon-contact', '/hackathon/contact')
+    # config.add_route('hackathon-sponsors', '/hackathon/sponsors')
 
     config.add_route('login', '/user/login')
-    config.add_route('create-user', 'user/create')
+    config.add_route('create-user', '/user/create-user')
     config.add_route('logout', '/user/logout')
     config.add_route('validate-username', '/user/validate-username')
+    config.add_route('user-home', '/user/')
 
     config.add_route('githubdeploy', '/githubdeploy')
     config.scan('.views')

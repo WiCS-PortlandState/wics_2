@@ -23,6 +23,7 @@
     <script src="{{request.static_url('wics_2:static/js/main.js')}}"></script>
 </head>
 <body class="bg-dark">
+{% block errors %}{% endblock errors %}
 <header>
     {% block main_nav %}{% endblock main_nav %}
 </header>
