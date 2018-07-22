@@ -21,6 +21,10 @@ def resolve_error(err):
         It looks like you're not logged in. To access the user portal, 
         you'll need to do that.
         '''
+    elif err == 'login_fail':
+        return '''
+        Username or password was incorrect.
+        '''
     return None
 
 

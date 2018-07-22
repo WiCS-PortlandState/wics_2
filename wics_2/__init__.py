@@ -28,7 +28,7 @@ def main(global_config, **settings):
     # config.add_route('hackathon-sponsors', '/hackathon/sponsors')
 
     config.add_route('login', '/user/login')
-    config.add_route('create-user', '/user/create-user')
+    config.add_route('create-user', '/user/create')
     config.add_route('logout', '/user/logout')
     config.add_route('validate-username', '/user/validate-username')
     config.add_route('user-home', '/user/')

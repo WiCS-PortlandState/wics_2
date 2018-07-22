@@ -1,19 +1,19 @@
 import os
+import hashlib
 import uuid
 import sched, time
 
-import bcrypt
 import random
 import datetime
 
 from pyramid.httpexceptions import HTTPFound
+from pyramid.renderers import render_to_response
 from pyramid.session import signed_serialize
 from pyramid.view import view_config
 from sqlalchemy.orm.exc import NoResultFound
 
-from wics_2.models.User import Salt, User
+from wics_2.models.User import Salt, User, Role
 from wics_2.models.UserInvitations import UserInvitations
-from ..models.meta import DBSession
 
 
 def get_user(username, session):
@@ -24,11 +24,20 @@ def get_user(username, session):
     return user
 
 
+def get_default_user_role(session):
+    try:
+        role = session.query(Role).filter(Role.member).one()
+    except NoResultFound:
+        role = None
+    return role
+
+
 def authenticate_user(username, password, session):
     user = get_user(username, session)
     if user is not None:
         salt = session.query(Salt).filter(Salt.id == user.salt).one()
-        hashed_pw = bcrypt.hashpw(password.encode('utf8'), salt.value).decode('utf8')
+        salted = (password + salt.value).encode('utf8')
+        hashed_pw = hashlib.sha512(salted).hexdigest()
         if user.password == hashed_pw:
             return user
     return None
@@ -36,7 +45,7 @@ def authenticate_user(username, password, session):
 
 def validate_invitation(invite_hash, session):
     try:
-        invite = session.query(UserInvitations).filter(UserInvitations.link_hash == invite_hash)
+        invite = session.query(UserInvitations).filter(UserInvitations.link_hash == invite_hash).one()
     except NoResultFound:
         invite = None
     if invite is not None and datetime.datetime.utcnow() <= invite.expire_date:
@@ -44,10 +53,11 @@ def validate_invitation(invite_hash, session):
     return None
 
 
-def salt_password(pw):
-    salts = DBSession.query(Salt).all()
+def salt_password(pw, session):
+    salts = session.query(Salt).all()
     salt = random.choice(salts)
-    return bcrypt.hashpw(pw.encode('utf8'), salt.value).decode('utf8'), salt.id
+    salted = (pw + salt.value).encode('utf8')
+    return hashlib.sha512(salted).hexdigest(), salt.id
 
 
 sessions = dict()
@@ -103,23 +113,54 @@ def login(request):
     username = request.params.get('username')
     password = request.params.get('password')
     user = authenticate_user(username, password, request.dbsession)
-    return create_session(HTTPFound('/user/'), username)
-    # return {
-    #     'error': {
-    #         'message': 'Incorrect username or password',
-    #     },
-    # }
+    if user is not None:
+        return create_session(HTTPFound('/user/'), username)
+    return HTTPFound('/?error=login_fail')
 
 
-@view_config(route_name='create-user', renderer='./templates/user_portal/auth/create-account.jinja2')
-def create_user(request):
+@view_config(route_name='create-user',
+             renderer='./templates/user_portal/auth/create-account.jinja2',
+             request_method='GET')
+def get_create_user(request):
     invite_hash = request.params.get('invite')
     if invite_hash is None:
         return HTTPFound('/?error=not_invited')
     invite = validate_invitation(invite_hash, request.dbsession)
     if invite is None:
         return HTTPFound('/?error=not_invited')
-    return {'email': invite.email}
+    return {'email': invite.email, 'invite': invite_hash}
+
+
+@view_config(route_name='create-user', request_method='POST')
+def post_create_user(request):
+    invite_hash = request.params.get('invite')
+    if invite_hash is None:
+        return HTTPFound('/?error=not_invited')
+    invite = validate_invitation(invite_hash, request.dbsession)
+    if invite is None:
+        return HTTPFound('/?error=not_invited')
+    username = request.params.get('username')
+    password = request.params.get('password')
+    nickname = request.params.get('nickname')
+    first_name = request.params.get('first_name')
+    last_name = request.params.get('last_name')
+    email = request.params.get('email')
+    (password, salt) = salt_password(password, request.dbsession)
+    user = User()
+    user.username = username
+    user.password = password
+    user.salt = salt
+    user.role = get_default_user_role(request.dbsession).id
+    user.nickname = nickname
+    user.first_name = first_name
+    user.last_name = last_name
+    user.email = email
+    request.dbsession.add(user)
+    request.dbsession.delete(invite)
+    return create_session(render_to_response(
+        './templates/user_portal/home.jinja2',
+        {'user': user},
+        request=request), username)
 
 
 @view_config(route_name='logout')

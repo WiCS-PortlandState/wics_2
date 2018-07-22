@@ -16,7 +16,6 @@ requires = [
     'sqlalchemy',
     'psycopg2',
     'alembic',
-    'bcrypt',
     'zope.sqlalchemy',
     'pyramid-beaker',
     'pyramid_tm',
