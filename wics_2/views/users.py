@@ -110,3 +110,23 @@ def get_user_list(request):
     return {
         'users': list(map(lambda user: user.to_dict(), users))
     }
+
+
+@view_config(route_name='edit-user', renderer='json', request_method='PATCH')
+def promote_user(request):
+    pass
+
+
+@view_config(route_name='edit-user', renderer='json', request_method='DELETE')
+def remove_user(request):
+    pass
+
+
+@view_config(route_name='invite', renderer='json', request_method='POST')
+def invite_user(request):
+    pass
+
+
+@view_config(route_name='invite', renderer='json', request_method='DELETE')
+def remove_invite(request):
+    pass

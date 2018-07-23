@@ -33,6 +33,8 @@ def main(global_config, **settings):
     config.add_route('validate-username', '/user/validate-username')
     config.add_route('user-home', '/user/')
     config.add_route('get-users', '/user/get-list')
+    config.add_route('edit-user', '/user')
+    config.add_route('invite', '/user/invite')
 
     config.add_route('githubdeploy', '/githubdeploy')
     config.scan('.views')
