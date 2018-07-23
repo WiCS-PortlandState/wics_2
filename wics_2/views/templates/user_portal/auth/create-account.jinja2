@@ -27,13 +27,13 @@
     </div>
     <script>
         $('#user-create-form').submit(function() {
-            password = $('#password-create-field').val();
-            passwordVal = $('#password-validate-create-field').val();
+            var password = $('#password-create-field').val();
+            var passwordVal = $('#password-validate-create-field').val();
             if (password !== passwordVal) {
                 $('#create-error-field').text('Passwords don\'t match!');
                 return false;
             }
-            username = $('#username-create-field').val();
+            var username = $('#username-create-field').val();
             $('#username-create-field').addClass('text-white');
             $('#password-create-field').addClass('text-white');
             $('#username-create-field').val(sha1(username));
@@ -41,7 +41,7 @@
             return true;
         });
 
-        $('#username-create-field').onfocusout(function() {
+        $('#username-create-field').focusout(function() {
             var username = $('#username-create-field').val();
             if (username === '') {
                 $('#username-create-field').removeClass('border-warning');
@@ -52,7 +52,7 @@
                 type: 'POST',
                 url: '/user/validate-username',
                 data: {
-                    username: username,
+                    username: sha1(username),
                 },
                 dataType: 'json',
                 success: function (data) {

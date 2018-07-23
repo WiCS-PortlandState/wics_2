@@ -10,7 +10,7 @@ import os
 log = logging.getLogger(__name__)
 
 
-def resolve_error(err):
+def resolve_error(err, message):
     if err == 'not_invited':
         return '''
         Sorry! You must be invited to create a WiCS account. 
@@ -25,13 +25,17 @@ def resolve_error(err):
         return '''
         Username or password was incorrect.
         '''
+    elif err == 'user_create':
+        return message
     return None
 
 
 @view_config(route_name='home', renderer='templates/home.jinja2')
 def home(request):
     error = request.params.get('error')
-    return {'project': 'wics_2', 'error': resolve_error(error)}
+    message = request.params.get('message')
+    session = request.cookies.get('session')
+    return {'project': 'wics_2', 'error': resolve_error(error, message)}
 
 
 def redeploy():

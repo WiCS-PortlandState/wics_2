@@ -5,5 +5,14 @@
 {% endblock main_nav %}
 
 {% block content %}
-    <h1>hey</h1>
+    <div class="container">
+        <div class="row">
+            <h1>WiCS User Portal</h1>
+        </div>
+        {% if role_name == 'admin' %}
+        <div class="row">
+            {% include "admin/user-card.jinja2" %}
+        </div>
+        {% endif %}
+    </div>
 {% endblock content %}

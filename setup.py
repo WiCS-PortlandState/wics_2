@@ -20,6 +20,7 @@ requires = [
     'pyramid-beaker',
     'pyramid_tm',
     'pyramid_retry',
+    'markdown',
 ]
 
 tests_require = [

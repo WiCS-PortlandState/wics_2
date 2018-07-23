@@ -1,0 +1,77 @@
+<div class="card-group">
+    <div class="card"><div class="card-body">
+        <h4 class="card-title text-center">user panel</h4>
+        <div class="container">
+            <div class="row">
+                
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label for="username-user-search-field">username</label>
+                    <input type="text" class="input-lg mr-3" id="username-user-search-field" />
+                    <label for="email-user-search-field">email</label>
+                    <input type="text" class="input-lg mr-3" id="email-user-search-field" />
+                    <button class="btn btn-sm btn-primary" id="submit-user-search-button">lookup user</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <div class="text-warning" id="search-user-error"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div id="search-user-result"></div>
+                </div>
+                <div class="col-md">
+                    <div id="search-user-actions"></div>
+                </div>
+            </div>
+        </div>
+    </div></div>
+</div>
+<script>
+    function fillUserData(users) {
+        child = null;
+        if (users && users.length > 0) {
+            child = '<select class="form-control">';
+            for (var i = 0; i < users.length; ++i) {
+                child += '<option>' + users[i].last_name + ', ' + users[i].first_name + '</option>';
+            }
+            child += '</select>';
+        }
+        $('#search-user-result').append(child);
+        if (child) {
+            var actions = '<ul class="list-group">';
+            actions += '<li class="list-group-item list-group-item-action clickable">promote user</li>';
+            actions += '<li class="list-group-item list-group-item-action clickable">remove user</li>';
+            actions += '</ul>';
+            $('#search-user-actions').append(actions);
+        }
+    }
+
+    $('#submit-user-search-button').click(function() {
+        $('#search-user-error').text('');
+        var username = $('#username-user-search-field').val();
+        var email = $('#email-user-search-field').val();
+        if (!username && !email) return;
+        $.ajax({
+            type: 'POST',
+            url: '/user/get-list',
+            dataType: 'json',
+            data: {
+                username: sha1(username),
+                email: email,
+            },
+            success: function(data) {
+                $('#search-user-result').empty();
+                $('#search-user-actions').empty();
+                if (data.error) {
+                    $('#search-user-error').text(data.error);
+                } else {
+                    fillUserData(data.users);
+                }
+            }
+        })
+    });
+</script>

@@ -115,6 +115,10 @@ a:hover {
     size: 12px;
 }
 
+.clickable:hover {
+    cursor: pointer;
+}
+
 
 /* Toaster */
 

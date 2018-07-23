@@ -8,8 +8,8 @@ from sqlalchemy.orm import configure_mappers
 
 # import or define all models here to ensure they are attached to the
 # Base.metadata prior to any initialization routines
-from .User import User, Salt, Role
-from .UserInvitations import UserInvitations
+from .User import User, Salt, Role, UserInvitation
+from .Blog import Blog, Tag
 
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup
@@ -39,12 +39,12 @@ def get_tm_session(session_factory, transaction_manager):
           engine = get_engine(settings)
           session_factory = get_session_factory(engine)
           with transaction.manager:
-              dbsession = get_tm_session(session_factory, transaction.manager)
+              db_session = get_tm_session(session_factory, transaction.manager)
     """
-    dbsession = session_factory()
+    db_session = session_factory()
     zope.sqlalchemy.register(
-        dbsession, transaction_manager=transaction_manager)
-    return dbsession
+        db_session, transaction_manager=transaction_manager)
+    return db_session
 
 
 def includeme(config):
@@ -68,6 +68,6 @@ def includeme(config):
     config.add_request_method(
         # r.tm is the transaction manager used by pyramid_tm
         lambda r: get_tm_session(session_factory, r.tm),
-        'dbsession',
+        'db_session',
         reify=True
     )
