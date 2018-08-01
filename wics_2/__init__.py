@@ -10,6 +10,7 @@ def main(global_config, **settings):
     config.include('pyramid_beaker')
     config.include('pyramid_tm')
     config.include('pyramid_retry')
+    config.include('pyramid_scss')
     config.include('.models')
 
     # Session stuff
@@ -17,6 +18,8 @@ def main(global_config, **settings):
     config.set_session_factory(session_factory)
 
     config.add_static_view('static', 'static', cache_max_age=3600)
+    config.add_route('css', '/css/{css_path:.*}.css')
+    config.add_view(route_name='css', view='pyramid_scss.controller.get_scss', renderer='scss', request_method='GET')
     config.add_route('home', '/')
 
     config.add_route('designer-home', '/design')

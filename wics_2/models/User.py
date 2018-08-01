@@ -11,7 +11,7 @@ from sqlalchemy import (
     ForeignKey,
     Boolean,
     DateTime,
-    or_)
+    or_, and_)
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -33,6 +33,13 @@ class User(Base):
     role = relationship('Role')
     active = Column(Boolean, default=True)
 
+    permission_map = {
+        'view': ['admin', 'leader', 'self'],
+        'edit': ['self', 'admin', 'leader'],
+        'create': ['self', 'admin'],
+        'delete': ['self', 'admin', 'leader'],
+    }
+
     @staticmethod
     def get_user_by_id(target_id, db_session):
         try:
@@ -52,7 +59,10 @@ class User(Base):
     @staticmethod
     def get_by_username_or_email(username, email, db_session):
         try:
-            users = db_session.query(User).filter(or_(User.username == username, User.email == email)).all()
+            users = db_session\
+                .query(User)\
+                .filter(and_(or_(User.username == username, User.email == email), User.active))\
+                .all()
         except NoResultFound:
             users = []
         return users
@@ -74,6 +84,16 @@ class User(Base):
         self.last_name = last_name
         self.nickname = nickname
         self.email = email
+
+    def has_permissions_on_others(self, permission):
+        if self.role.get_role_name() in User.permission_map[permission]:
+            return True
+        return False
+
+    def promote_other(self, other_user, db_session):
+        if self.role.compare(other_user.role) <= 0:
+            return False
+        other_user.role = other_user.role.get_promotion(db_session)
 
     def salt_password(self, db_session):
         salts = Salt.get_all(db_session)
@@ -102,11 +122,6 @@ class User(Base):
             return '\r\n'.join(errors)
         return None
 
-    def get_role(self, db_session):
-        if self.role is not None and self.role != 0:
-            return Role.get_by_id(self.role, db_session)
-        return None
-
     def to_dict(self):
         return dict({
             'first_name': self.first_name,
@@ -114,6 +129,7 @@ class User(Base):
             'nickname': self.nickname,
             'role': self.role.name,
             'email': self.email,
+            'username': self.username,
         })
 
 
@@ -143,6 +159,13 @@ class Role(Base):
     leader = Column(Boolean, nullable=False, default=False)
     member = Column(Boolean, nullable=False, default=True)
 
+    permission_tree = {
+        'admin': 99,
+        'leader': 98,
+        'designer': 50,
+        'member': 0,
+    }
+
     @staticmethod
     def get_default(db_session):
         return db_session.query(Role).filter(Role.member).one()
@@ -155,6 +178,24 @@ class Role(Base):
             role = None
         return role
 
+    def compare(self, other):
+        my_role = self.get_role_name()
+        other_role = other.get_role_name()
+        return Role.permission_tree[my_role] - Role.permission_tree[other_role]
+
+    def get_promotion(self, db_session):
+        role_name = self.get_role_name()
+        query_name = None
+        if role_name == 'member':
+            query_name = 'singer-songwriter'
+        elif role_name == 'designer':
+            query_name = 'poet'
+        elif role_name == 'leader':
+            query_name = 'beyonce'
+        if query_name is None:
+            raise NoResultFound
+        return db_session.query(Role).filter(Role.name == query_name).one()
+
     def get_role_name(self):
         if self.admin:
             return 'admin'
@@ -162,8 +203,7 @@ class Role(Base):
             return 'leader'
         if self.designer:
             return 'designer'
-        if self.member:
-            return 'member'
+        return 'member'
 
 
 class UserInvitation(Base):
@@ -174,6 +214,12 @@ class UserInvitation(Base):
     expire_date = Column(DateTime, nullable=False)
     link_hash = Column(Text, nullable=False, default=uuid.uuid4().hex)
 
+    permission_map = {
+        'create': ['admin', 'leader'],
+        'view': ['admin', 'leader'],
+        'delete': ['admin', 'leader'],
+    }
+
     @staticmethod
     def validate(invite_hash, db_session):
         try:
@@ -183,6 +229,12 @@ class UserInvitation(Base):
         if invite is not None and datetime.datetime.utcnow() <= invite.expire_date:
             return invite
         return None
+
+    @staticmethod
+    def validate_permissions(action, user):
+        if user.role.get_role_name() in UserInvitation.permission_map[action]:
+            return True
+        return False
     
     @staticmethod
     def create_invite(email, days_valid, db_session):
@@ -194,3 +246,4 @@ class UserInvitation(Base):
         invite.expire_date = datetime.datetime.utcnow() + datetime.timedelta(days=days_valid)
         invite.link_hash = uuid.uuid4().hex
         db_session.add(invite)
+        return invite

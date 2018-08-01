@@ -1,5 +1,6 @@
 import logging
 
+from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 from pyramid.response import Response
 import subprocess as command
@@ -7,7 +8,12 @@ import datetime
 import sys
 import os
 
+from wics_2.session_manager import SessionManager
+
 log = logging.getLogger(__name__)
+
+
+session_manager = SessionManager()
 
 
 def resolve_error(err, message):
@@ -35,6 +41,8 @@ def home(request):
     error = request.params.get('error')
     message = request.params.get('message')
     session = request.cookies.get('session')
+    if session_manager.validate_session(session):
+        return HTTPFound('/user/')
     return {'project': 'wics_2', 'error': resolve_error(error, message)}
 
 

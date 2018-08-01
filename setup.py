@@ -21,6 +21,7 @@ requires = [
     'pyramid_tm',
     'pyramid_retry',
     'markdown',
+    'pyramid-scss',
 ]
 
 tests_require = [

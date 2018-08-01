@@ -9,6 +9,15 @@ from wics_2.session_manager import SessionManager
 session_manager = SessionManager()
 
 
+session_validation_error = {
+    'error': 'It looks like your logged-in session has ended. Log in and try again.'
+}
+
+user_validation_error = {
+    'error': 'It doesn\'t look like you are a valid user.'
+}
+
+
 @view_config(route_name='login', renderer='json')
 def login(request):
     username = request.params.get('username')
@@ -97,10 +106,10 @@ def user_home(request):
 def get_user_list(request):
     username = session_manager.validate_session(request.cookies['session'])
     if username is None:
-        return {'error': 'It looks like your logged-in session has ended. Log in and try again.'}
+        return session_validation_error
     user = User.get_user_by_username(username, request.db_session)
     if user is None:
-        return {'error': 'It looks like your logged-in session has ended. Log in and try again.'}
+        return user_validation_error
     session_manager.refresh_session(request.cookies['session'])
     find_username = request.params.get('username')
     find_email = request.params.get('email')
@@ -114,16 +123,69 @@ def get_user_list(request):
 
 @view_config(route_name='edit-user', renderer='json', request_method='PATCH')
 def promote_user(request):
-    pass
+    logged_in_username = session_manager.validate_session(request.cookies.get('session'))
+    if logged_in_username is None:
+        return session_validation_error
+    user = User.get_user_by_username(logged_in_username, request.db_session)
+    if user is None:
+        return user_validation_error
+    if not user.has_permissions_on_others('edit'):
+        return {'error': 'You do not have the appropriate permissions to perform this action.'}
+    other_username = request.params.get('username')
+    if other_username is None:
+        return {'error': 'Invalid user was given.'}
+    other_user = User.get_user_by_username(other_username, request.db_session)
+    if other_user is None:
+        return {'error': 'Could not find that user!'}
+    if not user.promote_other(other_user, request.db_session):
+        return {'error': 'Something went wrong when trying to promote that user!'}
+    request.db_session.add(other_user)
+    return {'role_name': other_user.role.name}
 
 
+# Removing a user doesn't pull them from the DB, it sets them to an 'inactive' state
 @view_config(route_name='edit-user', renderer='json', request_method='DELETE')
 def remove_user(request):
-    pass
+    logged_in_username = session_manager.validate_session(request.cookies.get('session'))
+    if logged_in_username is None:
+        return session_validation_error
+    user = User.get_user_by_username(logged_in_username, request.db_session)
+    if user is None:
+        return user_validation_error
+    if not user.has_permissions_on_others('delete'):
+        return {'error': 'You do not have the appropriate permissions to perform this action.'}
+    del_username = request.params.get('username')
+    if del_username is None:
+        return {'error': 'Invalid user was given.'}
+    del_user = User.get_user_by_username(del_username, request.db_session)
+    if del_user is None:
+        return {'error': 'Could not find that user!'}
+    del_user.active = False
+    request.db_session.add(del_user)
+    return {'username': del_username}
 
 
 @view_config(route_name='invite', renderer='json', request_method='POST')
 def invite_user(request):
+    username = session_manager.validate_session(request.cookies.get('session'))
+    if username is None:
+        return session_validation_error
+    user = User.get_user_by_username(username, request.db_session)
+    if user is None:
+        return user_validation_error
+    if not UserInvitation.validate_permissions('create', user):
+        return {'error': 'You do not have permission to invite other members'}
+    email = request.params.get('email')
+    if email is not None:
+        email = email.strip()
+    if email is None or email == '':
+        return {'error': 'Not a valid email!'}
+    invite = UserInvitation.create_invite(email, 5, request.db_session)
+    return {'link_hash': invite.link_hash}
+
+
+@view_config(route_name='invite', renderer='json', request_method='GET')
+def get_invites(request):
     pass
 
 

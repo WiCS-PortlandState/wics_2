@@ -13,7 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- WiCS CSS -->
-    <link rel="stylesheet" href="{{request.static_url('wics_2:static/css/main.css')}}">
+    <link rel="stylesheet" href="/css/main.css">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
@@ -22,20 +22,20 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="{{request.static_url('wics_2:static/js/main.js')}}"></script>
 </head>
-<body class="bg-dark">
+<body class="large-device-bg-primary">
 {% block errors %}{% endblock errors %}
 <header>
     {% block main_nav %}{% endblock main_nav %}
 </header>
-<div class="container padded-top bg-secondary mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1 container">
+<div class="container large-device-mt-3 large-device-mb-3 bg-color-accent-2">
+    <div class="row bg-color-accent-2">
+        <div class="col-md-10 col-md-offset-1 container small-device-center medium-device-center full-width pb-4">
             {% block content %}{% endblock content %}
         </div>
     </div>
 </div>
-<footer class="footer text-center bg-dark text-muted">
-    Copyright &copy; Women in Computer Science - PSU, 2018
+<footer class="footer text-center typography">
+    Copyright &copy; We in Computer Science - PSU, 2018
 </footer>
 
 

@@ -1,0 +1,12 @@
+<div class="bg-color-secondary container">
+    <div class="row">
+        <div class="col-sm"><h2>Actions</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            {% if role_name == 'admin' %}
+                {% include "admin/user-actions.jinja2" %}
+            {% endif %}
+        </div>
+    </div>
+</div>
