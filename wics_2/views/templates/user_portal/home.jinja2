@@ -1,0 +1,21 @@
+{% extends "../wics-setup.jinja2" %}
+
+{% block main_nav %}
+    {% include "user-menu.jinja2" %}
+{% endblock main_nav %}
+
+{% block content %}
+    <div class="container">
+        {% if role_name == 'admin' or role_name == 'leader' %}
+        <div class="row typography-header text-center">Admin</div>
+        <div class="row">
+            <div class="col-lg">
+                {% include "action-panel.jinja2" %}
+            </div>
+            <div class="col-lg">
+                {% include "result-panel.jinja2" %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock content %}
