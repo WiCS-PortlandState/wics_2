@@ -1,0 +1,184 @@
+<div class="container">
+    <div class="row vertical-center list-group-item">
+        <div class="col-sm">
+            <label for="invite-user-field">email</label>
+            <input type="text" class="input-lg form-control mr-3" id="invite-user-field" />
+        </div>
+        <div class="col-sm">
+            <button class="btn btn-sm btn-info mt-3" id="submit-invite-user">invite</button>
+            <button class="btn btn-sm btn-info mt-3" id="submit-lookup-user-invite">lookup invite</button>
+        </div>
+    </div>
+    <div class="row vertical-center list-group-item">
+        <div class="col-sm">
+            <label for="username-user-search-field">username</label>
+            <input type="text" class="input-lg form-control mr-3" id="username-user-search-field" />
+            <label for="email-user-search-field">email</label>
+            <input type="email" class="input-lg form-control mr-3" id="email-user-search-field" />
+        </div>
+        <div class="col-sm">
+            <button class="btn btn-sm btn-info mt-3" id="submit-user-search-button">lookup user</button>
+        </div>
+    </div>
+</div>
+<script>
+    function resetResultBody() {
+        $('#result-warning').empty();
+        $('#result-panel-body').empty();
+    }
+
+    function promoteUser() {
+        var username = $('#users-select-list').find(':selected').val();
+        $.ajax({
+            type: 'PATCH',
+            url: '/user',
+            dataType: 'json',
+            data: {
+                username: username
+            },
+            success: function(data) {
+                if (data.error) {
+                    $('#result-warning').text(data.error);
+                } else {
+                    console.log('user was promoted to: ' + data.role_name)
+                }
+            }
+        })
+    }
+
+    $(document).on('click', '#promote-user-button', function() {promoteUser()});
+
+    function removeUser() {
+        var username = $('#users-select-list').find(':selected').val();
+        $.ajax({
+            type: 'DELETE',
+            url: '/user',
+            dataType: 'json',
+            data: {
+                username: username
+            },
+            success: function(data) {
+                if (data.error) {
+                    $('#result-warning').text(data.error);
+                } else {
+                    console.log('user was deleted')
+                }
+            }
+        })
+    }
+
+    $(document).on('click', '#remove-user-button', function() {removeUser()});
+
+    function fillUserData(users) {
+        child = null;
+        if (users && users.length > 0) {
+            child = '<select class="form-control" id="users-select-list">';
+            for (var i = 0; i < users.length; ++i) {
+                child += '<option value="' + users[i].username + '">' + users[i].last_name + ', ' + users[i].first_name + '</option>';
+            }
+            child += '</select>';
+        }
+        $('#result-panel-body').append(child);
+        if (child) {
+            var actions = '<ul class="list-group">';
+            actions += '<li class="list-group-item list-group-item-action clickable mt-2" id="promote-user-button">promote user</li>';
+            actions += '<li class="list-group-item list-group-item-action clickable bg-danger typography-light" id="remove-user-button">remove user</li>';
+            actions += '</ul>';
+            $('#result-panel-body').append(actions);
+        }
+    }
+
+    $('#submit-user-search-button').click(function() {
+        resetResultBody();
+        var username = $('#username-user-search-field').val();
+        var email = $('#email-user-search-field').val();
+        if (!username && !email) return;
+        $.ajax({
+            type: 'POST',
+            url: '/user/get-list',
+            dataType: 'json',
+            data: {
+                username: sha1(username),
+                email: email,
+            },
+            success: function(data) {
+                $('#search-user-result').empty();
+                $('#search-user-actions').empty();
+                if (data.error) {
+                    $('#result-warning').text(data.error);
+                } else {
+                    fillUserData(data.users);
+                }
+            }
+        })
+    });
+
+    $('#submit-invite-user').click(function() {
+        resetResultBody();
+        var email = $('#invite-user-field').val();
+        if (!email) {
+            $('#invite-user-message').html('');
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/user/invite',
+            dataType: 'json',
+            data: {email: email},
+            success: function(data) {
+                if (data.error) {
+                    $('#result-warning').text(data.error);
+                } else {
+                    var message = 'Send this link to the person you are trying to invite:'
+                    + '<p class="color-secondary">' + data.link_hash + '</p>';
+                    message += 'This invitation will be active for 5 days or until they use it sign up. ';
+                    message += 'After that, if they still need to register you\'ll need to invite them again';
+                    $('#result-panel-body').html(message);
+                }
+            }
+        })
+    });
+
+    function revokeInvitation() {
+
+    }
+
+    function extendInvitation() {
+
+    }
+
+    function fillInviteData(invites) {
+        if (invites && invites.length > 0) {
+            var child = '<select class="form-control">';
+            for (var i = 0; i < invites.length; ++i) {
+                child += '<option>link: ' + invites[i].link + ' , expires: ' + invites[i].expires + '</option>'
+            }
+            child += '</select>';
+            $('#result-panel-body').append(child);
+            var actions = '<ul class="list-group">';
+            actions += '<li class="list-group-item list-group-item-action clickable" onclick="revokeInvitation">revoke invitation</li>';
+            actions += '<li class="list-group-item list-group-item-action clickable" onclick="extendInvitation">extend invitation</li>';
+            actions += '</ul>';
+            $('#result-panel-body').append(actions);
+        }
+    }
+
+    $('#submit-lookup-user-invite').click(function() {
+        resetResultBody();
+        var email = $('#invite-user-field').val();
+        if (!email) return;
+        $.ajax({
+            type: 'GET',
+            url: '/user/invite',
+            dataType: 'json',
+            data: {email: email},
+            success: function(data) {
+                if (data.error) {
+                    $('#result-warning').text(data.error);
+                } else {
+                    fillInviteData(data.invites);
+                }
+            }
+        })
+    });
+</script>

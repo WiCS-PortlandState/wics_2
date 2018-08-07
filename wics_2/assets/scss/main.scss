@@ -1,0 +1,424 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
+@import url('https://fonts.googleapis.com/css?family=Bad+Script');
+
+$color-primary: #fdc56c;
+$color-secondary: #948ffc;
+$color-text-light: #FFFFFF;
+$color-accent-1: #f78c8e;
+$color-accent-2: #1d245e;
+$color-dark: #343a40;
+$color-very-light: rgba(29, 36, 94, 0.2);
+$color-light: #FFFFFF;
+
+a {
+  font-weight: 700;
+  color: $color-accent-2;
+}
+
+a:hover {
+  text-decoration: none;
+  color: $color-secondary;
+}
+
+strong {
+  font-weight: 700;
+}
+
+.vertical-center {
+  align-items: center;
+}
+
+.avoid-wrap {
+  display: inline-block;
+}
+
+.bg-color-primary {
+  background-color: $color-primary;
+}
+
+.bg-color-secondary {
+  background-color: $color-secondary;
+}
+
+.bg-color-accent-1 {
+  background-color: $color-accent-1;
+}
+
+.bg-color-accent-2 {
+  background-color: $color-accent-2;
+}
+
+.bg-color-light {
+  background-color: $color-light;
+}
+
+.btn-ghost {
+  border-radius: 8px;
+  border: solid thick $color-accent-2;
+  background-color: $color-very-light;
+}
+
+.btn-primary {
+  background-color: $color-primary;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.flush {
+  margin: 5px !important;
+  padding: 5px !important;
+}
+
+.font-xxxl {
+  font-size: 100px;
+}
+
+.horizontal-rule-dark {
+  border: solid 0.5px $color-very-light;
+  width: 95%;
+  margin: 0 auto 0 auto;
+}
+
+.small-bottom-margin {
+  margin-bottom: 25px;
+}
+
+.medium-bottom-margin {
+  margin-bottom: 75px;
+}
+
+.big-bottom-margin {
+  margin-bottom: 150px;
+}
+
+.black-background {
+  background-color: rgba(0, 0, 0, 0.33);
+}
+
+.full-width {
+  width: 100%;
+  height: auto;
+}
+
+.full-width-img-div {
+  width: 100%;
+  padding: 0.5px;
+}
+
+.most-width {
+  width: 90%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.fix-height-230 {
+  height: 230px;
+}
+
+.header-logo {
+  max-height: 150px;
+  height: 100%;
+}
+
+.carousel-image {
+  width: 100%;
+}
+
+.darken {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.header-fixed-top {
+  position: fixed;
+  top: 0px;
+  margin-top: 75px;
+}
+
+.icon {
+  width: 100px;
+  max-height: 100px;
+  margin: 0px 20px 0px 20px;
+}
+
+.icon-match {
+  line-height: 100px;
+  vertical-align: center;
+  margin: 0px 20px 0px 20px;
+}
+
+.mt-6 {
+  margin-top: 75px;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.overlay-on-hover {
+  background-color: black;
+  opacity: 0;
+  transition: opacity 0.5s;
+  padding: 5%;
+}
+
+.overlay-on-hover:hover {
+  opacity: .8;
+}
+
+.rounded-borders {
+  border-radius: 5px;
+}
+
+.row {
+  padding: 20px 10px 20px 10px;
+}
+
+.typography {
+  color: $color-text-light;
+  font-weight: 200;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.typography-dark {
+  color: $color-dark !important;
+}
+
+.typography-light {
+  color: $color-text-light !important;
+}
+
+.typography-color-primary {
+  color: $color-primary !important;
+}
+
+.typography-color-secondary {
+  color: $color-secondary !important;
+}
+
+.typography-color-accent-1 {
+  color: $color-accent-1 !important;
+}
+
+.typography-color-accent-2 {
+  color: $color-accent-2 !important;
+}
+
+.typography-body {
+  @extend .typography;
+  font-size: 16px;
+}
+
+.typography-cursive {
+  @extend .typography;
+  font-family: 'Bad Script', cursive;
+}
+
+.typography-header {
+  @extend .typography;
+  font-size: 36px;
+}
+
+.row {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.white-border {
+  border: solid thin white;
+  border-radius: 5px;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+/* Toaster */
+
+.toaster {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+.toaster-show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the toaster in and out */
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+.small-device-center {}
+
+.small-device-only {
+  display: none;
+}
+
+.medium-device-only {
+  display: none;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.medium-device-center {}
+
+.mobile-center {}
+
+.large-device-only {}
+
+.large-device-mb-3 {
+  margin-bottom: 12px;
+}
+
+.large-device-mt-3 {
+  margin-top: 12px;
+}
+
+.large-device-bg-primary {
+  background-color: $color-primary;
+}
+
+@media(max-width: 576px) {
+  .small-device-only {}
+
+  .small-device-center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .medium-device-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .medium-device-center {}
+
+  .mobile-center {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .large-device-only {
+    display: none;
+  }
+
+  .large-device-mb-3 {
+    margin-bottom: 0;
+  }
+
+  .large-device-mt-3 {
+    margin-top: 0;
+  }
+
+  .large-device-bg-primary {
+    background-color: $color-accent-2;
+  }
+}
+
+@media(max-width: 768px) {
+  .small-device-only {
+    display: none;
+  }
+
+  .small-device-center {}
+
+  .medium-device-only {}
+
+  .medium-device-center {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .mobile-center {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .large-device-only {
+    display: none;
+  }
+
+  .large-device-mb-3 {
+    margin-bottom: 0;
+  }
+
+  .large-device-mt-3 {
+    margin-top: 0;
+  }
+
+  .large-device-bg-primary {
+    background-color: $color-accent-2;
+  }
+}

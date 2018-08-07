@@ -1,0 +1,36 @@
+<div class="modal small-device-center" id="user-login-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="login-user-form" action="/user/login" method="post">
+                <div class="modal-body">
+                    <div class="typography-body text-warning mb-2" id="login-error-field"></div>
+                    <label for="username-login-field">username</label>
+                    <input type="text" class="form-text mb-2 small-device-center border-info" name="username" id="username-login-field" />
+                    <label for="password-login-field">password</label>
+                    <input type="password" class="form-text small-device-center border-info" name="password" id="password-login-field" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn bg-color-secondary">login</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('#login-user-form').submit(function() {
+        var username = $('#username-login-field').val();
+        var password = $('#password-login-field').val();
+        $('#username-login-field').addClass('text-white');
+        $('#password-login-field').addClass('text-white');
+        $('#username-login-field').val(sha1(username));
+        $('#password-login-field').val(sha1(password));
+        return true;
+    })
+</script>
