@@ -21,6 +21,7 @@ def main(global_config, **settings):
     config.add_route('css', '/css/{css_path:.*}.css')
     config.add_view(route_name='css', view='pyramid_scss.controller.get_scss', renderer='scss', request_method='GET')
     config.add_route('home', '/')
+    config.add_route('leaders', '/leaders')
 
     config.add_route('designer-home', '/design')
 

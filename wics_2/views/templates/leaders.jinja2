@@ -1,0 +1,44 @@
+{% extends "wics-setup.jinja2" %}
+{% block main_nav %}
+    {% include "public-menu.jinja2" %}
+{% endblock main_nav %}
+{% block content %}
+    {% include "user_portal/auth/login-modal.jinja2" %}
+    <div class="row">
+        <h1 class="typography-header typography-light center">Meet our Leaders!</h1>
+    </div>
+    <div class="row horizontal-rule-light">
+        <p class="typography-light typography-body inner-padding-5">
+            We're lucky enough to have some of the best and brightest leaders around helping us put on great events and implement our amazing programming. We pride ourselves on creating communities and spaces that you love and where you feel like <strong class="typography-color-accent-1">you belong!</strong> If you see one of us around, feel free to say hi! We love hearing from you.
+        </p>
+    </div>
+    <div class="row full-width">
+        <div class="col-md leader-card">
+            <div class="leader-card-name">Alyssa Tamayo</div>
+            <img class="center-block" src="{{request.static_url('wics_2:static/images/leaders/alyssa_tamayo.jpg')}}" />
+            <div class="leader-card-body">
+                <strong>Alyssa Tamayo</strong> is a free spirited Post-Bac in the CS department at Portland State. Previously studying music composition and performance, Alyssa loves to jam with friends, spend time outdoors, and play with her two favorite puppies Precious and Mia.
+            </div>
+        </div>
+        <div class="col-md leader-card">
+            <div class="leader-card-name">Leila Hawana</div>
+            <img class="center-block" src="{{request.static_url('wics_2:static/images/leaders/leila_hawana.jpg')}}" />
+            <div class="leader-card-body">
+                <strong>Leila Hawana</strong> is a Master's student in the CS department at Portland State. Also studying music performance and math in her previous career, Leila loves to give back to her community through teaching, performing, writing, and mentoring. In her free time, she loves spending time with her favorite furball Izzy.
+            </div>
+        </div>
+        <div class="col-md leader-card">
+            <div class="leader-card-name">Karis Sponsler</div>
+            <img class="center-block" src="{{request.static_url('wics_2:static/images/leaders/karis_sponsler.jpeg')}}" />
+            <div class="leader-card-body">
+                <strong>Karis Sponsler</strong> is an undergraduate student in the CS department at Portland State. She is switching to a career in software after 12 years in the food service industry where she managed large teams in several different resturants. In addition to software, she is involved in local activism and participates in panels around transgender rights.
+            </div>
+        </div>
+{#        <div class="col-md leader-card">#}
+{#            <div class="leader-card-name">Prerna Agarwal</div>#}
+{#            <img class="center-block" src="{{request.static_url('wics_2:static/images/leaders/prerna_agarwal.jpg')}}" />#}
+{#            <div class="leader-card-body">#}
+{#            </div>#}
+{#        </div>#}
+    </div>
+{% endblock content %}

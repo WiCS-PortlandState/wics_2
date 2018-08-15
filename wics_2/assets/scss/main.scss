@@ -10,6 +10,16 @@ $color-dark: #343a40;
 $color-very-light: rgba(29, 36, 94, 0.2);
 $color-light: #FFFFFF;
 
+$font-body: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-cursive: 'Bad Script', cursive;
+
+$spacing-1: 5px;
+$spacing-2: 10px;
+$spacing-3: 15px;
+$spacing-4: 25px;
+$spacing-5: 40px;
+$spacing-6: 60px;
+
 a {
   font-weight: 700;
   color: $color-accent-2;
@@ -21,7 +31,7 @@ a:hover {
 }
 
 strong {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .vertical-center {
@@ -83,6 +93,48 @@ strong {
   margin: 0 auto 0 auto;
 }
 
+.horizontal-rule-light {
+  border-bottom: solid 0.5px $color-light;
+  width: 95%;
+  margin: 0 auto 0 auto;
+}
+
+.inner-padding-5 {
+  padding-right: $spacing-5;
+  padding-left: $spacing-5;
+}
+
+.leader-card {
+  max-width: 400px;
+  background-color: $color-primary;
+  border-radius: 5px;
+  padding: 16px;
+  text-align: center;
+  margin: 32px;
+}
+.leader-card .leader-card-name {
+  font-family: $font-body;
+  font-size: 32px;
+  font-weight: 600;
+  color: $color-accent-2;
+  border-bottom: solid thin $color-light;
+  margin-bottom: 16px;
+}
+.leader-card .leader-card-body {
+  font-family: $font-body;
+  font-size: 16px;
+  color: $color-accent-2;
+  border-top: solid thin $color-light;
+  margin-top: 16px;
+  padding-top: 8px;
+  text-align: left;
+}
+.leader-card img {
+  width: auto;
+  max-height: 350px;
+  margin: 0 auto;
+}
+
 .small-bottom-margin {
   margin-bottom: 25px;
 }
@@ -101,6 +153,10 @@ strong {
 
 .full-width {
   width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
   height: auto;
 }
 
@@ -182,7 +238,7 @@ strong {
 .typography {
   color: $color-text-light;
   font-weight: 200;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: $font-body;
 }
 
 .typography-dark {
@@ -216,7 +272,7 @@ strong {
 
 .typography-cursive {
   @extend .typography;
-  font-family: 'Bad Script', cursive;
+  font-family: $font-cursive;
 }
 
 .typography-header {
@@ -340,6 +396,10 @@ strong {
 }
 
 @media(max-width: 576px) {
+  .leader-card {
+    margin: 10px 0;
+  }
+
   .small-device-only {}
 
   .small-device-center {
@@ -382,6 +442,10 @@ strong {
 }
 
 @media(max-width: 768px) {
+  .leader-card {
+    margin: 10px 10px;
+  }
+
   .small-device-only {
     display: none;
   }
