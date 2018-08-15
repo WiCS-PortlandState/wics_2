@@ -13,11 +13,12 @@
 {% endblock errors %}
 {% block content%}
     {% include "user_portal/auth/login-modal.jinja2" %}
+    <div class="container">
     <div class="row">
-        <div class="col-lg small-device-center medium-device-center p-2">
-            <img class="small-device-center" src="{{request.static_url('wics_2:static/images/faces.jpg')}}" />
+        <div class="col-lg p-2 center">
+            <img class="center" src="{{request.static_url('wics_2:static/images/faces.jpg')}}" />
         </div>
-        <div class="col-lg small-device-center medium-device-center p-2">
+        <div class="col-lg small-device-center medium-device-center p-4">
             <h3 class="typography-header typography-color-primary">What's in a Name?</h3>
             <p class="typography-body typography-light">
                 The short answer is: <i><span class="typography-color-accent-1"> an awful lot.</span></i><br>
@@ -33,27 +34,32 @@
             </p>
         </div>
     </div>
-    <div class="white-border full-width-img-div">
-        <img src="{{request.static_url('wics_2:static/images/hero_images/wics-site-lead.jpg')}}" class="full-width" />
+    <div class="row m-3">
+        <div class="col center">
+        <img src="{{request.static_url('wics_2:static/images/hero_images/wics-site-lead.jpg')}}" class="full-width center" />
+        </div>
     </div>
-    <div class="row bg-color-light typography-color-accent-2 rounded-borders mt-3 p-5">
-        <h2 class="center typography-header typography-color-accent-2 mt-4">We're relaunching the mentorship program!</h2>
-        <div class="horizontal-rule-dark"></div>
-        <p class="typography-body typography-color-accent-2 mt-4">
-            We in Computer Science have started the Mentorship Program to foster the growth of incoming
-            CS students and to continue our mission of making the department at Portland State a safe,
-            inclusive space to learn. Our motto "we belong" motivates us to encourage new and returning
-            students to be a part of our movement by growing our community and inspiring others to do the
-            same. With the WiCS Mentorship Program, new and returning students can join to either become
-            a mentor to students new to the PSU CS culture or to simply be a mentee who seeks guidance and
-            friendship while embarking on their new adventure.
-        </p>
-        <p class="typography-body typography-color-accent-2 mobile-center">
-            To learn how to get involved, go to the
-            <a href="https://sites.google.com/view/flipthestats" class="nowrap mobile-center" target="_blank">
-                <span class="large-device-only"> mentorship program homepage.</span>
-                <button class="btn mobile-only center btn-primary mt-3">mentorship program homepage</button>
-            </a>
-        </p>
+    <div class="row bg-color-light typography-color-accent-2 rounded-borders m-3 p-5">
+        <div class="col-lg">
+            <h2 class="center typography-header typography-color-accent-2 mt-4">We're relaunching the mentorship program!</h2>
+            <div class="horizontal-rule-dark"></div>
+            <p class="typography-body typography-color-accent-2 mt-4">
+                We in Computer Science have started the Mentorship Program to foster the growth of incoming
+                CS students and to continue our mission of making the department at Portland State a safe,
+                inclusive space to learn. Our motto "we belong" motivates us to encourage new and returning
+                students to be a part of our movement by growing our community and inspiring others to do the
+                same. With the WiCS Mentorship Program, new and returning students can join to either become
+                a mentor to students new to the PSU CS culture or to simply be a mentee who seeks guidance and
+                friendship while embarking on their new adventure.
+            </p>
+            <p class="typography-body typography-color-accent-2 mobile-center">
+                To learn how to get involved, go to the
+                <a href="https://sites.google.com/view/flipthestats" class="nowrap mobile-center" target="_blank">
+                    <span class="large-device-only"> mentorship program homepage.</span>
+                    <button class="btn mobile-only center btn-primary mt-3">mentorship program homepage</button>
+                </a>
+            </p>
+        </div>
+    </div>
     </div>
 {% endblock content %}

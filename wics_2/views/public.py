@@ -45,6 +45,10 @@ def home(request):
         return HTTPFound('/user/')
     return {'project': 'wics_2', 'error': resolve_error(error, message)}
 
+@view_config(route_name='leaders', renderer='templates/leaders.jinja2')
+def leaders(request):
+    return {}
+
 
 def redeploy():
     base_dir = os.path.dirname(os.path.realpath(__file__))
