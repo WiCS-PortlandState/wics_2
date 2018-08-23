@@ -23,8 +23,6 @@ def main(global_config, **settings):
     config.add_route('home', '/')
     config.add_route('leaders', '/leaders')
 
-    config.add_route('designer-home', '/design')
-
     # config.add_route('hackathon-home', '/hackathon')
     # config.add_route('hackathon-schedule', '/hackathon/schedule')
     # config.add_route('hackathon-register', '/hackathon/register')
@@ -39,6 +37,9 @@ def main(global_config, **settings):
     config.add_route('get-users', '/user/get-list')
     config.add_route('edit-user', '/user')
     config.add_route('invite', '/user/invite')
+    config.add_route('user-admin', '/user/admin')
+    config.add_route('designer', '/user/designer')
+    config.add_route('blog-admin', '/user/blog')
 
     config.add_route('githubdeploy', '/githubdeploy')
     config.scan('.views')
