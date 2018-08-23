@@ -182,9 +182,13 @@ strong {
   height: 100%;
 }
 
-.hero-image {
-  max-height: 500px;
-  width: auto;
+.home-logo {
+  background-color: $color-light;
+  padding: 0;
+}
+
+.home-logo img {
+  width: 100%;
 }
 
 .carousel-image {
