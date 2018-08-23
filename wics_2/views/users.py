@@ -18,6 +18,16 @@ user_validation_error = {
 }
 
 
+def validate_user_session(auth_cookie, db_session):
+    username = session_manager.validate_session(auth_cookie)
+    if username is None:
+        return None, session_validation_error
+    user = User.get_user_by_username(username, db_session)
+    if user is None:
+        return None, user_validation_error
+    return user, None
+
+
 @view_config(route_name='login', renderer='json')
 def login(request):
     username = request.params.get('username')
@@ -58,7 +68,7 @@ def post_create_user(request):
     user = User(username, password, first_name, last_name, nickname, email)
     errors = user.get_validation_errors(request.db_session)
     if errors is not None:
-        return HTTPFound('/?error=user_create_errors&message=' + errors)
+        return HTTPFound('/?error=general&message=' + errors)
     user.before_save(request.db_session)
     request.db_session.add(user)
     request.db_session.delete(invite)
@@ -89,11 +99,8 @@ def validate_username(request):
 
 @view_config(route_name='user-home', renderer='./templates/user_portal/home.jinja2')
 def user_home(request):
-    username = session_manager.validate_session(request.cookies['session'])
-    if username is None:
-        return HTTPFound('/?error=login_error')
-    user = User.get_user_by_username(username, request.db_session)
-    if user is None:
+    user, error = validate_user_session(request.cookies.get('session'), request.db_session)
+    if error is not None:
         return HTTPFound('/?error=login_error')
     session_manager.refresh_session(request.cookies['session'])
     return {
@@ -104,12 +111,9 @@ def user_home(request):
 
 @view_config(route_name='get-users', renderer='json')
 def get_user_list(request):
-    username = session_manager.validate_session(request.cookies['session'])
-    if username is None:
-        return session_validation_error
-    user = User.get_user_by_username(username, request.db_session)
-    if user is None:
-        return user_validation_error
+    user, error = validate_user_session(request.cookies.get('session'), request.db_session)
+    if error is not None:
+        return error
     session_manager.refresh_session(request.cookies['session'])
     find_username = request.params.get('username')
     find_email = request.params.get('email')
@@ -123,12 +127,9 @@ def get_user_list(request):
 
 @view_config(route_name='edit-user', renderer='json', request_method='PATCH')
 def promote_user(request):
-    logged_in_username = session_manager.validate_session(request.cookies.get('session'))
-    if logged_in_username is None:
-        return session_validation_error
-    user = User.get_user_by_username(logged_in_username, request.db_session)
-    if user is None:
-        return user_validation_error
+    user, error = validate_user_session(request.cookies.get('session'), request.db_session)
+    if error is not None:
+        return error
     if not user.has_permissions_on_others('edit'):
         return {'error': 'You do not have the appropriate permissions to perform this action.'}
     other_username = request.params.get('username')
@@ -146,12 +147,9 @@ def promote_user(request):
 # Removing a user doesn't pull them from the DB, it sets them to an 'inactive' state
 @view_config(route_name='edit-user', renderer='json', request_method='DELETE')
 def remove_user(request):
-    logged_in_username = session_manager.validate_session(request.cookies.get('session'))
-    if logged_in_username is None:
-        return session_validation_error
-    user = User.get_user_by_username(logged_in_username, request.db_session)
-    if user is None:
-        return user_validation_error
+    user, error = validate_user_session(request.cookies.get('session'), request.db_session)
+    if error is not None:
+        return error
     if not user.has_permissions_on_others('delete'):
         return {'error': 'You do not have the appropriate permissions to perform this action.'}
     del_username = request.params.get('username')
@@ -167,12 +165,9 @@ def remove_user(request):
 
 @view_config(route_name='invite', renderer='json', request_method='POST')
 def invite_user(request):
-    username = session_manager.validate_session(request.cookies.get('session'))
-    if username is None:
-        return session_validation_error
-    user = User.get_user_by_username(username, request.db_session)
-    if user is None:
-        return user_validation_error
+    user, error = validate_user_session(request.cookies.get('session'), request.db_session)
+    if error is not None:
+        return error
     if not UserInvitation.validate_permissions('create', user):
         return {'error': 'You do not have permission to invite other members'}
     email = request.params.get('email')
@@ -192,3 +187,27 @@ def get_invites(request):
 @view_config(route_name='invite', renderer='json', request_method='DELETE')
 def remove_invite(request):
     pass
+
+
+@view_config(route_name='user-admin', renderer='templates/user_portal/user-admin.jinja2')
+def user_admin(request):
+    user, error = validate_user_session(request.cookies.get('session'), request.db_session)
+    if error is not None:
+        return HTTPFound('/?error=general&message={}'.format(error['error']))
+    return {'user': user}
+
+
+@view_config(route_name='blog-admin', renderer='templates/user_portal/blog-admin.jinja2')
+def blog_admin(request):
+    user, error = validate_user_session(request.cookies.get('session'), request.db_session)
+    if error is not None:
+        return HTTPFound('/?error=general&message={}'.format(error['error']))
+    return {'user': user}
+
+
+@view_config(route_name='designer', renderer='templates/user_portal/designer.jinja2')
+def designer(request):
+    user, error = validate_user_session(request.cookies.get('session'), request.db_session)
+    if error is not None:
+        return HTTPFound('/?error=general&message={}'.format(error['error']))
+    return {'user': user}

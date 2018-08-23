@@ -31,7 +31,7 @@ def resolve_error(err, message):
         return '''
         Username or password was incorrect.
         '''
-    elif err == 'user_create':
+    elif err == 'general':
         return message
     return None
 
@@ -44,6 +44,7 @@ def home(request):
     if session_manager.validate_session(session):
         return HTTPFound('/user/')
     return {'project': 'wics_2', 'error': resolve_error(error, message)}
+
 
 @view_config(route_name='leaders', renderer='templates/leaders.jinja2')
 def leaders(request):

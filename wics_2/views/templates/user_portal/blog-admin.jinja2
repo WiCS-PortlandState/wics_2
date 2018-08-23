@@ -1,0 +1,38 @@
+{% extends "../wics-setup.jinja2" %}
+
+{% block main_nav %}
+    {% include "user-menu.jinja2" %}
+{% endblock main_nav %}
+
+{% block content %}
+    <div class="container pt-4">
+    <div class="row center">
+        <h1 class="typography-header typography-light center">Blog Admin</h1>
+    </div>
+    <div class="row horizontal-rule-light"></div>
+    <div class="row mt-4">
+        <div class="col-lg">
+            <h2 class="typography-light center">posts</h2>
+        </div>
+        <div class="col-lg">
+            <h2 class="typography-light center">drafts</h2>
+        </div>
+    </div>
+    <div class="row horizontal-rule-light"></div>
+    <div class="row mt-4">
+        <div class="col-lg typography-body typography-light form-group-lg center">
+            <h2 class="typography-light center">create post</h2>
+
+            <label class="center mt-4" for="create_post_title">title</label>
+            <input type="text" id="create_post_title" class="form-control" />
+            <label class="center mt-3" for="create_post_content">content (accepts markdown)</label>
+            <textarea type="text" id="create_post_content" class="form-control"></textarea>
+            <label class="center mt-3" for="create_post_image">add hero image</label>
+            <input type="file" id="create_post_image" class="form-control" />
+            <button class="btn btn-primary form-control mb-4 mt-2" id="create_post_upload_image">upload hero image</button>
+            <button class="btn btn-primary form-control mb-2" id="create_post_publish">publish</button>
+            <button class="btn btn-primary form-control" id="create_post_save_draft">save as draft</button>
+        </div>
+    </div>
+    </div>
+{% endblock content %}

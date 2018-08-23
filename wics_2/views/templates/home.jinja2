@@ -13,10 +13,10 @@
 {% endblock errors %}
 {% block content%}
     {% include "user_portal/auth/login-modal.jinja2" %}
-    <div class="container">
+    <div class="container pt-2">
     <div class="row">
-        <div class="col-lg p-2 center">
-            <img class="center hero-image" src="{{request.static_url('wics_2:static/images/We-Belong-Logo-Graphic-Only.png')}}" />
+        <div class="col-lg center home-logo">
+            <img class="center" src="{{request.static_url('wics_2:static/images/We-Belong-Logo-Graphic-Only.png')}}" />
         </div>
         <div class="col-lg small-device-center medium-device-center p-4 mt-4">
             <h3 class="typography-header typography-color-primary">What's in a Name?</h3>
@@ -35,8 +35,8 @@
         </div>
     </div>
     <div class="row m-3">
-        <div class="col center">
-        <img src="{{request.static_url('wics_2:static/images/hero_images/wics-site-lead.jpg')}}" class="full-width center" />
+        <div class="col-lg center">
+            <img src="{{request.static_url('wics_2:static/images/hero_images/wics-site-lead.jpg')}}" class="center full-width" />
         </div>
     </div>
     <div class="row bg-color-light typography-color-accent-2 rounded-borders m-3 p-5">
